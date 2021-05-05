@@ -181,7 +181,62 @@ void cargarPokemon(HashMap * map, HashMap * pokedex){
     fclose(newfile);
     printf("***************Los pokemon se cargaron exitosamente***************\n");
 }
+//Funcion que ingresa un pokemon y sus datos por el usuario, falta arreglar cuando es mas de un tipo
+void atraparPokemon(HashMap * map, HashMap * pokedex)
+{
+    if(sizeMap(map)==100)
+    {
+        printf("Has llegado al limite de pokemon en tu almacenamiento\n");        
+    }
+    else
+    {
+        printf("Introduzca los datos del Pokemon\n");
+        char cad[78] = "Id:Nombre:Tipos:PC:PS:Pre-Evolucion:Post-Evolucion:Region:Sexo:Numero-Pokedex:";
+    
+       char id[5];
+       char nombre[50];
+       char *tipos[50];
+       int pc;
+       int ps;
+       char prEvol[50];
+       char postEvol[50];
+       char region[50];
+       char sexo[2];
+       char nPokedex[5];
+       int cont=0;
+       int i,j;
+       int k=0;
+       for (i=0 ; i<10 ; i++)
+       {
+           for (j=k ; j<81 ; j++)
+           {
+               printf("%c",cad[j]);
+               if(cad[j] == ':')
+               {
+                   k = j+1;
+                   break;
+               }
+           }
+           if(cont == 0) scanf("%s",&id);
+           if(cont == 1) scanf("%s",&nombre);
+           if(cont == 2) scanf("%s",&tipos[0]);
+           if(cont == 3) scanf("%d",&pc);
+           if(cont == 4) scanf("%d",&ps);
+           if(cont == 5) scanf("%s",&prEvol);
+           if(cont == 6) scanf("%s",&postEvol);
+           if(cont == 7) scanf("%s",&region);
+           if(cont == 8) scanf("%s",&sexo);
+           if(cont == 9) scanf("%s",&nPokedex);
+           printf("\n");
+           cont ++;
+       }
+       Storage(map,pokedex,nombre, id, tipos,  pc,  ps, sexo, prEvol, postEvol, nPokedex, region);
+        
+       printf("%s Fue Atrapado Correctamente\n",nombre);
+       //scanf("%s",&nombre);
+    }
 
+}
 int main()
 {
 
@@ -206,7 +261,7 @@ int main()
         switch(caso)
         {
             case 1:cargarPokemon(map,pokedex);break;
-            case 2:printf("NO IMPLEMENTADA\n");break;
+            case 2:atraparPokemon(map,pokedex);break;
             case 3:printf("NO IMPLEMENTADA\n");break;
             case 4:printf("NO IMPLEMENTADA\n");break;
             case 5:printf("NO IMPLEMENTADA\n");break;
