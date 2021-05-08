@@ -199,21 +199,30 @@ void cargarPokemon(HashMap * map, HashMap * pokedex){
     fclose(newfile);
     printf("***************Los pokemon se cargaron exitosamente***************\n");
 }
-//Funcion que ingresa un pokemon y sus datos por el usuario, falta arreglar cuando es mas de un tipo
+void cargarTipos(char** pokemon, int i)
+{
+    int f;
+    for(f=0;f<i;f++)
+    {
+        printf("\nTipos:");
+        scanf("%s",pokemon[f]);
+    }
+}
+//Funcion que ingresa un pokemon y sus datos por el usuario
 void atraparPokemon(HashMap * map, HashMap * pokedex)
 {
     if(sizeMap(map)==100)
     {
-        printf("Has llegado al limite de pokemon en tu almacenamiento\n");        
+        printf("Has llegado al limite de pokemon en tu almacenamiento\n");   
     }
     else
     {
         printf("Introduzca los datos del Pokemon\n");
-        char cad[78] = "Id:Nombre:Tipos:PC:PS:Pre-Evolucion:Post-Evolucion:Region:Sexo:Numero-Pokedex:";
+        char cad[72] = "Id:Nombre:PC:PS:Pre-Evolucion:Post-Evolucion:Region:Sexo:Numero-Pokedex:";
     
        char id[5];
        char nombre[50];
-       char *tipos[50];
+       //char **tipos;  
        int pc;
        int ps;
        char prEvol[50];
@@ -224,9 +233,10 @@ void atraparPokemon(HashMap * map, HashMap * pokedex)
        int cont=0;
        int i,j;
        int k=0;
-       for (i=0 ; i<10 ; i++)
+       //int z=0;
+       for (i=0 ; i<9 ; i++)
        {
-           for (j=k ; j<81 ; j++)
+           for (j=k ; j<75 ; j++)
            {
                printf("%c",cad[j]);
                if(cad[j] == ':')
@@ -237,23 +247,27 @@ void atraparPokemon(HashMap * map, HashMap * pokedex)
            }
            if(cont == 0) scanf("%s",&id);
            if(cont == 1) scanf("%s",&nombre);
-           if(cont == 2) scanf("%s",&tipos[0]);
-           if(cont == 3) scanf("%d",&pc);
-           if(cont == 4) scanf("%d",&ps);
-           if(cont == 5) scanf("%s",&prEvol);
-           if(cont == 6) scanf("%s",&postEvol);
-           if(cont == 7) scanf("%s",&region);
-           if(cont == 8) scanf("%s",&sexo);
-           if(cont == 9) scanf("%s",&nPokedex);
+           if(cont == 2) scanf("%d",&pc);
+           if(cont == 3) scanf("%d",&ps);
+           if(cont == 4) scanf("%s",&prEvol);
+           if(cont == 5) scanf("%s",&postEvol);
+           if(cont == 6) scanf("%s",&region);
+           if(cont == 7) scanf("%s",&sexo);
+           if(cont == 8) scanf("%s",&nPokedex);
            printf("\n");
            cont ++;
        }
-       Storage(map,pokedex,nombre, id, tipos,  pc,  ps, sexo, prEvol, postEvol, nPokedex, region);
-        
+       printf("Escriba cuantos Tipos quiere ingresar: ");
+       scanf("%d",&j);
+       char** Tipos =(char**) malloc (sizeof(char*)*j);
+       for (i=0;i< j; i++)
+       {
+           Tipos[i] = (char*)malloc(sizeof(char)*32);
+       }
+       cargarTipos(Tipos,j);
+       Storage(map,pokedex,nombre, id, Tipos,  pc,  ps, sexo, prEvol, postEvol, nPokedex, region);
        printf("%s Fue Atrapado Correctamente\n",nombre);
-       //scanf("%s",&nombre);
     }
-
 }
 int main()
 {
