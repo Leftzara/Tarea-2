@@ -56,6 +56,11 @@ int conversorInt(char * cadena){
 }
 
 
+void separarCadena(char* cadena){
+    for(int i=0;i<strlen(cadena);i++){
+        printf("%c - ",cadena);
+    }
+}
 //Funcion para leer el k-esimo elemento de un string (separado por comas) nos ayuda para cargar el archivo
 char*get_csv_field (char * tmp, int k){
     int open_mark = 0;
@@ -141,18 +146,31 @@ void cargarPokemon(HashMap * map, HashMap * pokedex){
         newfile=fopen("storage.csv","a");
         fputs(linea,newfile);
 
-        char *nombre,*sexo,*ePrev,*ePos,*region,*id,*tipo[4],*nPok;
-        int i,pc=0,ps=0,k=0;
-
         while (fgets (linea, 1023, file) != NULL) { 
         // Se lee la linea y se copia en el nuevo archivo
             fputs(linea,newfile);
-        //Creamos un bombero por linea de archivo y guardamos en el los datos 
+            char *nombre,*sexo,*ePrev,*ePos,*region,*id,*tipos[4],*nPok;
+            int i,pc=0,ps=0,k=0;
             for(int i=0;i<10;i++){
                 char *aux = get_csv_field(linea, i); 
                 if(i==0)id=aux;
                 if(i==1)nombre=aux;
-                if(i==2)tipo[0]=aux;
+                if(i==2){
+                    //Separamos los tipos y los almacenamos en un arreglo bidimensional
+                    int cont=0;
+                    aux[strlen(aux)]='a';
+                    for(int w=0;w<4;w++){
+                        char * q = get_csv_field(aux, w);
+                        if(q){
+                            tipos[cont]=q;
+                            cont++;
+                        }
+                        else{
+                            tipos[cont]=NULL;
+                            cont++;
+                        }
+                    }
+                }
                 if(i==3)pc=conversorInt(aux);
                 if(i==4)ps=conversorInt(aux);
                 if(i==5)sexo=aux;
@@ -161,7 +179,7 @@ void cargarPokemon(HashMap * map, HashMap * pokedex){
                 if(i==8)nPok=aux;
                 if(i==9)region=aux;
             }
-            Storage(map,pokedex,nombre,id,tipo,pc,ps,sexo,ePrev,ePos,nPok,region);
+            Storage(map,pokedex,nombre,id,tipos,pc,ps,sexo,ePrev,ePos,nPok,region);
             if(sizeMap(map)==100){
                 printf("Has llegado al limite de pokemon en tu almacenamiento\n");
                 flag=false;
