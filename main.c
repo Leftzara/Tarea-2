@@ -12,7 +12,7 @@ typedef struct{
     char id[3];
     int PC;
     int PS;
-    char sexo[2];
+    char sexo[10];
 }Pokemon;
 
 //Estructura pokemon atrapado con datos por pokemon respecto a la pokedex
@@ -26,10 +26,11 @@ typedef struct{
 }PokemonAtrapado;
 
 
-Pokemon* createPokemon(char* nombre, char* id, int PC, int PS){
+Pokemon* createPokemon(char* nombre, char* id, int PC, int PS,char* sexo){
     Pokemon* p = (Pokemon*) malloc(sizeof(Pokemon));
     strcpy(p->nombre,nombre);
     strcpy(p->id,id);
+    strcpy(p->sexo,sexo);
     p->PC=PC;
     p->PS=PS;
     return p;
@@ -56,11 +57,6 @@ int conversorInt(char * cadena){
 }
 
 
-void separarCadena(char* cadena){
-    for(int i=0;i<strlen(cadena);i++){
-        printf("%c - ",cadena);
-    }
-}
 //Funcion para leer el k-esimo elemento de un string (separado por comas) nos ayuda para cargar el archivo
 char*get_csv_field (char * tmp, int k){
     int open_mark = 0;
@@ -97,7 +93,7 @@ char*get_csv_field (char * tmp, int k){
 
 //Guardamos los pokemon en nuestro almacenamiento pokemon y pokedex
 void Storage(HashMap * map,HashMap * Pokedexs,char* nombre, char * id,char** tipos, int PC, int PS, char* sexo, char* evoPrev, char* evoPos, char* nPokedex, char* region){
-    Pokemon *p = createPokemon(nombre,id,PC,PS);
+    Pokemon *p = createPokemon(nombre,id,PC,PS,sexo);
     insertMap(map,id,p);
     List * pokedex = searchMap(Pokedexs,nPokedex);
     if(!pokedex){
@@ -269,6 +265,43 @@ void atraparPokemon(HashMap * map, HashMap * pokedex)
        printf("%s Fue Atrapado Correctamente\n",nombre);
     }
 }
+
+//Le da formato a la cadena ingresada por si el usuario no inicio o escribio toda la palabra con mayuscula
+char * formatoCadena(char * cadena){
+    for(int i=0;i<strlen(cadena);i++){
+        if(i==0)cadena[0]=toupper(cadena[0]);
+        else cadena[i]=tolower(cadena[i]);
+    }
+    return cadena;
+}
+
+void buscarPorNombre(HashMap * map){
+    char nombre[50];
+    bool flag=false;
+    Pokemon * pokemon = firstMap(map);
+    printf("Ingrese el nombre del pokemon a buscar: ");
+    scanf("%s",&nombre);
+    strcpy(nombre,formatoCadena(nombre));
+    while(pokemon){
+        if(is_equal(pokemon->nombre,nombre)){
+            if(!flag){
+                printf("***************** Resultados de %s *****************\n",nombre);
+                printf("ID       PC       PS       SEXO\n");
+                flag=true;
+            }
+            printf("%-2s",pokemon->id);
+            printf("       ");
+            printf("%-2d",pokemon->PC);
+            printf("       ");
+            printf("%-2d",pokemon->PS);
+            printf("       ");
+            printf("%s\n",pokemon->sexo);
+        }
+        pokemon=nextMap(map);
+    }
+    if(!flag)printf("No se encontraron resultados para %s",nombre);
+}
+
 int main()
 {
 
@@ -296,7 +329,7 @@ int main()
             case 2:atraparPokemon(map,pokedex);break;
             case 3:printf("NO IMPLEMENTADA\n");break;
             case 4:printf("NO IMPLEMENTADA\n");break;
-            case 5:printf("NO IMPLEMENTADA\n");break;
+            case 5:buscarPorNombre(map);break;
             case 6:printf("NO IMPLEMENTADA\n");break;
             case 7:printf("NO IMPLEMENTADA\n");break;
             case 8:printf("NO IMPLEMENTADA\n");break;

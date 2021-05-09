@@ -19,9 +19,9 @@ void eraseMap(HashMap * table, char * key);
 
 void * searchMap(HashMap * table, char * key);
 
-Pair * firstMap(HashMap * map);
+void * firstMap(HashMap * map);
 
-Pair * nextMap(HashMap * table);
+void * nextMap(HashMap * table);
 
 void enlarge(HashMap * map);
 
