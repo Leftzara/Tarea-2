@@ -284,75 +284,81 @@ char * formatoCadena(char * cadena){
 }
 
 void buscarPorNombre(HashMap * map){
-    printf("-----------------------------------------------------------------------\n");
-    char nombre[50];
-    bool flag=false;
-    Pokemon * pokemon = firstMap(map);
-    printf("Ingrese el nombre del pokemon a buscar: ");
-    scanf("%s",&nombre);
-     printf("-----------------------------------------------------------------------\n");
-    strcpy(nombre,formatoCadena(nombre));
-    while(pokemon){
-        if(is_equal(pokemon->nombre,nombre)){
-            if(!flag){
-                printf("***************** Resultados de %s *****************\n",nombre);
-                printf("----------------------------------\n");
-                printf("ID       PC       PS       SEXO\n");
-                printf("----------------------------------\n");
-                flag=true;
+    if(map){
+        printf("-----------------------------------------------------------------------\n");
+        char nombre[50];
+        bool flag=false;
+        Pokemon * pokemon = firstMap(map);
+        printf("Ingrese el nombre del pokemon a buscar: ");
+        scanf("%s",&nombre);
+        printf("-----------------------------------------------------------------------\n");
+        strcpy(nombre,formatoCadena(nombre));
+        while(pokemon){
+            if(is_equal(pokemon->nombre,nombre)){
+                if(!flag){
+                    printf("***************** Resultados de %s *****************\n",nombre);
+                    printf("----------------------------------\n");
+                    printf("ID       PC       PS       SEXO\n");
+                    printf("----------------------------------\n");
+                    flag=true;
+                }
+                printf("%-2s",pokemon->id);
+                printf("       ");
+                printf("%-2d",pokemon->PC);
+                printf("       ");
+                printf("%-2d",pokemon->PS);
+                printf("       ");
+                printf("%s\n",pokemon->sexo);
             }
-            printf("%-2s",pokemon->id);
-            printf("       ");
-            printf("%-2d",pokemon->PC);
-            printf("       ");
-            printf("%-2d",pokemon->PS);
-            printf("       ");
-            printf("%s\n",pokemon->sexo);
+            pokemon=nextMap(map);
         }
-        pokemon=nextMap(map);
+        if(!flag)printf("No se encontraron resultados para %s\n",nombre);
+        printf("----------------------------------\n");
+        printf("\n");
     }
-    if(!flag)printf("No se encontraron resultados para %s\n",nombre);
-    printf("----------------------------------\n");
-    printf("\n");
+    else printf("No tiene ningun pokemon en su almacenamiento\n");
 }
 
 void evolucionar(HashMap * map, HashMap * pokedexs){
-    printf("-----------------------------------------------------------------------\n");
-    char id[3];
-    bool flag=false;
-    printf("Ingrese la id pokemon a evolucionar: ");
-    scanf("%s",&id);
-    Pokemon * p = searchMap(map,id);;
-    if(p){
-        List *pokedex = searchMap(pokedexs,p->nPokedex);
-        if(pokedex){
-            PokemonAtrapado * pa =firstList(pokedex);
-            while(pa){
-                if(is_equal(pa->pokemon,p->nombre)){
-                    if(is_equal(pa->pokemon,pa->posterior) || is_equal(pa->posterior,"No tiene")){
-                        printf("El pokemon %s ha alcanzado su maxima evolucion\n",p->nombre);
-                        flag=true;
-                        break;
+    if(map){
+        printf("-----------------------------------------------------------------------\n");
+        char id[3];
+        bool flag=false;
+        printf("Ingrese la id pokemon a evolucionar: ");
+        scanf("%s",&id);
+        Pokemon * p = searchMap(map,id);;
+        if(p){
+            List *pokedex = searchMap(pokedexs,p->nPokedex);
+            if(pokedex){
+                PokemonAtrapado * pa =firstList(pokedex);
+                while(pa){
+                    if(is_equal(pa->pokemon,p->nombre)){
+                        if(is_equal(pa->pokemon,pa->posterior) || is_equal(pa->posterior,"No tiene")){
+                            printf("El pokemon %s ha alcanzado su maxima evolucion\n",p->nombre);
+                            flag=true;
+                            break;
+                        }
+                        else{
+                            printf("El pokemon %s evoluciono a",p->nombre);
+                            strcpy(p->nombre,pa->posterior);
+                            strcpy(pa->pokemon,pa->posterior);
+                            p->PC=p->PC*1,5;
+                            p->PS=p->PS*1,25;
+                            flag=true;
+                            printf(" %s exitosamente\n",p->nombre);
+                            break;
+                        }
                     }
                     else{
-                        printf("El pokemon %s evoluciono a",p->nombre);
-                        strcpy(p->nombre,pa->posterior);
-                        strcpy(pa->pokemon,pa->posterior);
-                        p->PC=p->PC*1,5;
-                        p->PS=p->PS*1,25;
-                        flag=true;
-                        printf(" %s exitosamente\n",p->nombre);
-                        break;
+                        pa=nextList(pokedex);
                     }
-                }
-                else{
-                    pa=nextList(pokedex);
                 }
             }
         }
+        if(!flag)printf("No se encontro ningun pokemon con la id asociada\n");
+        printf("-----------------------------------------------------------------------\n");
     }
-    if(!flag)printf("No se encontro ningun pokemon con la id asociada\n");
-    printf("-----------------------------------------------------------------------\n");
+    else printf("No tiene ningun pokemon en su almacenamiento\n");
 }
 
 int main()
