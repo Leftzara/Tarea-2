@@ -13,6 +13,7 @@ typedef struct{
     int PC;
     int PS;
     char sexo[10];
+    char nPokedex[4];
 }Pokemon;
 
 //Estructura pokemon atrapado con datos por pokemon respecto a la pokedex
@@ -26,11 +27,12 @@ typedef struct{
 }PokemonAtrapado;
 
 
-Pokemon* createPokemon(char* nombre, char* id, int PC, int PS,char* sexo){
+Pokemon* createPokemon(char* nombre, char* id, int PC, int PS,char* sexo, char* nPokedex){
     Pokemon* p = (Pokemon*) malloc(sizeof(Pokemon));
     strcpy(p->nombre,nombre);
     strcpy(p->id,id);
     strcpy(p->sexo,sexo);
+    strcpy(p->nPokedex,nPokedex);
     p->PC=PC;
     p->PS=PS;
     return p;
@@ -93,7 +95,7 @@ char*get_csv_field (char * tmp, int k){
 
 //Guardamos los pokemon en nuestro almacenamiento pokemon y pokedex
 void Storage(HashMap * map,HashMap * Pokedexs,char* nombre, char * id,char** tipos, int PC, int PS, char* sexo, char* evoPrev, char* evoPos, char* nPokedex, char* region){
-    Pokemon *p = createPokemon(nombre,id,PC,PS,sexo);
+    Pokemon *p = createPokemon(nombre,id,PC,PS,sexo,nPokedex);
     insertMap(map,id,p);
     List * pokedex = searchMap(Pokedexs,nPokedex);
     if(!pokedex){
@@ -121,6 +123,7 @@ void Storage(HashMap * map,HashMap * Pokedexs,char* nombre, char * id,char** tip
 
 //Cargamos pokemon a partir de uno o mas archivos .csv ingresados por el usuario
 void cargarPokemon(HashMap * map, HashMap * pokedex){
+    printf("-----------------------------------------------------------------------\n");
     char nameFile[101],answer[2];
     bool flag=true;
     FILE *file,*newfile;
@@ -132,6 +135,7 @@ void cargarPokemon(HashMap * map, HashMap * pokedex){
             gets(nameFile);
             strcat(nameFile,".csv");
             file = fopen (nameFile, "r" ); 
+            printf("-----------------------------------------------------------------------\n");
         }while(!file);
 
         // Cadena para guardar la linea completa del archivo csv
@@ -193,7 +197,10 @@ void cargarPokemon(HashMap * map, HashMap * pokedex){
 
     }while(flag);
     fclose(newfile);
-    printf("***************Los pokemon se cargaron exitosamente***************\n");
+    printf("-----------------------------------------------------------------------\n");
+    printf("***************  Los pokemon se cargaron exitosamente  ***************\n");
+    printf("-----------------------------------------------------------------------\n");
+    printf("\n");
 }
 void cargarTipos(char** pokemon, int i)
 {
@@ -205,8 +212,8 @@ void cargarTipos(char** pokemon, int i)
     }
 }
 //Funcion que ingresa un pokemon y sus datos por el usuario
-void atraparPokemon(HashMap * map, HashMap * pokedex)
-{
+void atraparPokemon(HashMap * map, HashMap * pokedex){
+ printf("-----------------------------------------------------------------------\n");
     if(sizeMap(map)==100)
     {
         printf("Has llegado al limite de pokemon en tu almacenamiento\n");   
@@ -215,7 +222,7 @@ void atraparPokemon(HashMap * map, HashMap * pokedex)
     {
         printf("Introduzca los datos del Pokemon\n");
         char cad[72] = "Id:Nombre:PC:PS:Pre-Evolucion:Post-Evolucion:Region:Sexo:Numero-Pokedex:";
-    
+        printf("-----------------------------------------------------------------------\n");
        char id[5];
        char nombre[50];
        //char **tipos;  
@@ -264,6 +271,7 @@ void atraparPokemon(HashMap * map, HashMap * pokedex)
        Storage(map,pokedex,nombre, id, Tipos,  pc,  ps, sexo, prEvol, postEvol, nPokedex, region);
        printf("%s Fue Atrapado Correctamente\n",nombre);
     }
+    printf("-----------------------------------------------------------------------\n");
 }
 
 //Le da formato a la cadena ingresada por si el usuario no inicio o escribio toda la palabra con mayuscula
@@ -276,17 +284,21 @@ char * formatoCadena(char * cadena){
 }
 
 void buscarPorNombre(HashMap * map){
+    printf("-----------------------------------------------------------------------\n");
     char nombre[50];
     bool flag=false;
     Pokemon * pokemon = firstMap(map);
     printf("Ingrese el nombre del pokemon a buscar: ");
     scanf("%s",&nombre);
+     printf("-----------------------------------------------------------------------\n");
     strcpy(nombre,formatoCadena(nombre));
     while(pokemon){
         if(is_equal(pokemon->nombre,nombre)){
             if(!flag){
                 printf("***************** Resultados de %s *****************\n",nombre);
+                printf("----------------------------------\n");
                 printf("ID       PC       PS       SEXO\n");
+                printf("----------------------------------\n");
                 flag=true;
             }
             printf("%-2s",pokemon->id);
@@ -299,7 +311,48 @@ void buscarPorNombre(HashMap * map){
         }
         pokemon=nextMap(map);
     }
-    if(!flag)printf("No se encontraron resultados para %s",nombre);
+    if(!flag)printf("No se encontraron resultados para %s\n",nombre);
+    printf("----------------------------------\n");
+    printf("\n");
+}
+
+void evolucionar(HashMap * map, HashMap * pokedexs){
+    printf("-----------------------------------------------------------------------\n");
+    char id[3];
+    bool flag=false;
+    printf("Ingrese la id pokemon a evolucionar: ");
+    scanf("%s",&id);
+    Pokemon * p = searchMap(map,id);;
+    if(p){
+        List *pokedex = searchMap(pokedexs,p->nPokedex);
+        if(pokedex){
+            PokemonAtrapado * pa =firstList(pokedex);
+            while(pa){
+                if(is_equal(pa->pokemon,p->nombre)){
+                    if(is_equal(pa->pokemon,pa->posterior) || is_equal(pa->posterior,"No tiene")){
+                        printf("El pokemon %s ha alcanzado su maxima evolucion\n",p->nombre);
+                        flag=true;
+                        break;
+                    }
+                    else{
+                        printf("El pokemon %s evoluciono a",p->nombre);
+                        strcpy(p->nombre,pa->posterior);
+                        strcpy(pa->pokemon,pa->posterior);
+                        p->PC=p->PC*1,5;
+                        p->PS=p->PS*1,25;
+                        flag=true;
+                        printf(" %s exitosamente\n",p->nombre);
+                        break;
+                    }
+                }
+                else{
+                    pa=nextList(pokedex);
+                }
+            }
+        }
+    }
+    if(!flag)printf("No se encontro ningun pokemon con la id asociada\n");
+    printf("-----------------------------------------------------------------------\n");
 }
 
 int main()
@@ -308,6 +361,9 @@ int main()
     HashMap * map = createMap(100);
     HashMap * pokedex = createMap(100);
     int caso=2;
+    printf("-----------------------------------------------------------------------\n");
+    printf("                        ALMACENAMIENTO POKEMON                        \n");
+    printf("-----------------------------------------------------------------------\n");
     while(caso!=0)
     {
         printf(" 1. Cargar Pokemon\n");
@@ -327,7 +383,7 @@ int main()
         {
             case 1:cargarPokemon(map,pokedex);break;
             case 2:atraparPokemon(map,pokedex);break;
-            case 3:printf("NO IMPLEMENTADA\n");break;
+            case 3:evolucionar(map,pokedex);break;
             case 4:printf("NO IMPLEMENTADA\n");break;
             case 5:buscarPorNombre(map);break;
             case 6:printf("NO IMPLEMENTADA\n");break;
