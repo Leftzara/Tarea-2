@@ -422,9 +422,10 @@ void MostrarXregion(HashMap *map, HashMap *pokedex, HashMap *REGION)
         aux = nextList(x);
     }
     printf("-----------------------------------------------------------------------\n");
-    printf("************** Existen %d Pokemones en la region %s *******************\n",i,nregion);
+    printf("************ Existen %d Pokemones en la region %s *****************\n",i,nregion);
     printf("-----------------------------------------------------------------------\n");
 }
+//Falta que sea probada en la Pokedex
 void EliminarPokemon(HashMap * map, HashMap *Pokedex)
 {
     printf("Ingrese el ID del pokemon que desea eliminar:");
@@ -458,7 +459,9 @@ void EliminarPokemon(HashMap * map, HashMap *Pokedex)
         }
         aux2 = nextList(aux2);
     }
-    printf("%s fue eliminado\n",nombre);
+    printf("-----------------------------------------------------------------------\n");
+    printf("************** %s fue eliminado\n****************",nombre);
+    printf("-----------------------------------------------------------------------\n");
 }
 int main()
 {
