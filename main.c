@@ -24,6 +24,7 @@ typedef struct{
     char previa[50];
     char posterior[50];
     char region[20];
+    char nPokedex[5];
 }PokemonAtrapado;
 
 
@@ -38,12 +39,13 @@ Pokemon* createPokemon(char* nombre, char* id, int PC, int PS,char* sexo, char* 
     return p;
 }
 
-PokemonAtrapado* createPokemonAtrapado(char* pokemon, char** tipo, char* previa, char* posterior, char* region){
+PokemonAtrapado* createPokemonAtrapado(char* pokemon, char** tipo, char* previa, char* posterior, char* region,char* nPokedex){
     PokemonAtrapado* pa = (PokemonAtrapado*) malloc (sizeof(PokemonAtrapado));
     strcpy(pa->pokemon,pokemon);
     strcpy(pa->previa,previa);
     strcpy(pa->posterior,posterior);
     strcpy(pa->region,region);
+    strcmp(pa->nPokedex,nPokedex);
     pa->existencia = 1;
     return pa;
 }
@@ -100,7 +102,7 @@ void Storage(HashMap * map,HashMap * Pokedexs,HashMap *REGION ,char* nombre, cha
     List *Regiones = searchMap(REGION,region);
     if(!Regiones)
     {
-        PokemonAtrapado *pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region);
+        PokemonAtrapado *pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region,nPokedex);
         List * reg = createList();
         pushBack(reg,pa);
         insertMap(REGION,region,reg);
@@ -113,13 +115,13 @@ void Storage(HashMap * map,HashMap * Pokedexs,HashMap *REGION ,char* nombre, cha
             aux=nextList(Regiones);
         }
         if(!aux){
-            PokemonAtrapado * pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region);
+            PokemonAtrapado * pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region,nPokedex);
             pushBack(Regiones,pa);
         }
     }
     List * pokedex = searchMap(Pokedexs,nPokedex);
     if(!pokedex){
-        PokemonAtrapado * pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region);
+        PokemonAtrapado * pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region,nPokedex);
         List * poke = createList();
         pushBack(poke,pa);
         insertMap(Pokedexs,nPokedex,poke);
@@ -131,7 +133,7 @@ void Storage(HashMap * map,HashMap * Pokedexs,HashMap *REGION ,char* nombre, cha
             aux=nextList(pokedex);
         }
         if(!aux){
-            PokemonAtrapado * pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region);
+            PokemonAtrapado * pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region,nPokedex);
             pushBack(pokedex,pa);
         }
         else{
@@ -406,6 +408,7 @@ void MostrarXregion(HashMap *map, HashMap *pokedex, HashMap *REGION)
 
         if(is_equal(aux->region,nregion)==1)
         {
+            printf("Numero en la Pokedex: %s\n",aux->nPokedex);
             printf("Nombre: %s\n",aux->pokemon);
             printf("Pre-Evolucion: %s\n",aux->previa);
             printf("Post-Evolucion: %s\n",aux->posterior);
@@ -421,6 +424,41 @@ void MostrarXregion(HashMap *map, HashMap *pokedex, HashMap *REGION)
     printf("-----------------------------------------------------------------------\n");
     printf("************** Existen %d Pokemones en la region %s *******************\n",i,nregion);
     printf("-----------------------------------------------------------------------\n");
+}
+void EliminarPokemon(HashMap * map, HashMap *Pokedex)
+{
+    printf("Ingrese el ID del pokemon que desea eliminar:");
+    char id[5];
+    char nombre[30];
+    scanf("%s",&id);
+    Pokemon * aux = searchMap(map,id);
+    List *aux2 = searchMap(Pokedex,aux->nPokedex);
+    PokemonAtrapado *P = firstList(aux2);
+    
+    
+        if(is_equal(aux->id,id)==1)
+        {
+            strcpy(nombre,aux->nombre);
+            eraseMap(map,id);
+        }
+        
+        //aux = nextMap(map);
+    
+    while(aux2)
+    {
+        if(is_equal(P->nPokedex,aux->nPokedex)==1)
+        {
+            popCurrent(aux2);
+            if(P->existencia>1)
+            {
+                P->existencia--;
+                //Pokedex = aux2;
+            }
+            
+        }
+        aux2 = nextList(aux2);
+    }
+    printf("%s fue eliminado\n",nombre);
 }
 int main()
 {
@@ -457,7 +495,7 @@ int main()
             case 6:printf("NO IMPLEMENTADA\n");break;
             case 7:printf("NO IMPLEMENTADA\n");break;
             case 8:printf("NO IMPLEMENTADA\n");break;
-            case 9:printf("NO IMPLEMENTADA\n");break;
+            case 9:EliminarPokemon(map,pokedex);break;
             case 10:MostrarXregion(map,pokedex,REGION);break;
         }
     }
