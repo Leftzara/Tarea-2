@@ -94,9 +94,29 @@ char*get_csv_field (char * tmp, int k){
 }
 
 //Guardamos los pokemon en nuestro almacenamiento pokemon y pokedex
-void Storage(HashMap * map,HashMap * Pokedexs,char* nombre, char * id,char** tipos, int PC, int PS, char* sexo, char* evoPrev, char* evoPos, char* nPokedex, char* region){
+void Storage(HashMap * map,HashMap * Pokedexs,HashMap *REGION ,char* nombre, char * id,char** tipos, int PC, int PS, char* sexo, char* evoPrev, char* evoPos, char* nPokedex, char* region){
     Pokemon *p = createPokemon(nombre,id,PC,PS,sexo,nPokedex);
     insertMap(map,id,p);
+    List *Regiones = searchMap(REGION,region);
+    if(!Regiones)
+    {
+        PokemonAtrapado *pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region);
+        List * reg = createList();
+        pushBack(reg,pa);
+        insertMap(REGION,region,reg);
+    }
+    else
+    {
+        PokemonAtrapado * aux = firstList(Regiones);
+        while(aux){
+            if(!strcmp(aux->pokemon,nombre))break;
+            aux=nextList(Regiones);
+        }
+        if(!aux){
+            PokemonAtrapado * pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region);
+            pushBack(Regiones,pa);
+        }
+    }
     List * pokedex = searchMap(Pokedexs,nPokedex);
     if(!pokedex){
         PokemonAtrapado * pa = createPokemonAtrapado(nombre,tipos,evoPrev,evoPos,region);
@@ -122,7 +142,7 @@ void Storage(HashMap * map,HashMap * Pokedexs,char* nombre, char * id,char** tip
 
 
 //Cargamos pokemon a partir de uno o mas archivos .csv ingresados por el usuario
-void cargarPokemon(HashMap * map, HashMap * pokedex){
+void cargarPokemon(HashMap * map, HashMap * pokedex, HashMap * REGION){
     printf("-----------------------------------------------------------------------\n");
     char nameFile[101],answer[2];
     bool flag=true;
@@ -179,7 +199,7 @@ void cargarPokemon(HashMap * map, HashMap * pokedex){
                 if(i==8)nPok=aux;
                 if(i==9)region=aux;
             }
-            Storage(map,pokedex,nombre,id,tipos,pc,ps,sexo,ePrev,ePos,nPok,region);
+            Storage(map,pokedex,REGION,nombre,id,tipos,pc,ps,sexo,ePrev,ePos,nPok,region);
             if(sizeMap(map)==100){
                 printf("Has llegado al limite de pokemon en tu almacenamiento\n");
                 flag=false;
@@ -212,7 +232,7 @@ void cargarTipos(char** pokemon, int i)
     }
 }
 //Funcion que ingresa un pokemon y sus datos por el usuario
-void atraparPokemon(HashMap * map, HashMap * pokedex){
+void atraparPokemon(HashMap * map, HashMap * pokedex, HashMap *REGION){
  printf("-----------------------------------------------------------------------\n");
     if(sizeMap(map)==100)
     {
@@ -268,7 +288,7 @@ void atraparPokemon(HashMap * map, HashMap * pokedex){
            Tipos[i] = (char*)malloc(sizeof(char)*32);
        }
        cargarTipos(Tipos,j);
-       Storage(map,pokedex,nombre, id, Tipos,  pc,  ps, sexo, prEvol, postEvol, nPokedex, region);
+       Storage(map,pokedex,REGION,nombre, id, Tipos,  pc,  ps, sexo, prEvol, postEvol, nPokedex, region);
        printf("%s Fue Atrapado Correctamente\n",nombre);
     }
     printf("-----------------------------------------------------------------------\n");
@@ -360,12 +380,54 @@ void evolucionar(HashMap * map, HashMap * pokedexs){
     }
     else printf("No tiene ningun pokemon en su almacenamiento\n");
 }
+void imprimirTipos(char **pokemon, int i)
+{
+    int f;
+    printf("Tipos: ");
+    for(f=0;f<i;f++)
+    {
+        printf("%s",pokemon[f]);
+        if(pokemon[f+1]==NULL)break;
+        printf(", ");
+    }
+    printf("\n");
+}
+void MostrarXregion(HashMap *map, HashMap *pokedex, HashMap *REGION)
+{
+    printf("Escriba la region que quiere buscar:");
+    char nregion[30];
+    scanf("%s",&nregion);
+    int i=0;
+    printf("Usted se encuentra en a region %s\n",nregion);
+    List *x = searchMap(REGION,nregion);
+    PokemonAtrapado *aux = firstList(x);
+    while(aux)
+    {
 
+        if(is_equal(aux->region,nregion)==1)
+        {
+            printf("Nombre: %s\n",aux->pokemon);
+            printf("Pre-Evolucion: %s\n",aux->previa);
+            printf("Post-Evolucion: %s\n",aux->posterior);
+            printf("Existencia: %d\n",aux->existencia);
+            printf("Region: %s\n",aux->region);
+            printf("Tipo: %s\n",aux->tipo[0]);
+            imprimirTipos(aux->tipo,10);
+            i++;
+        }
+        printf("\n");
+        aux = nextList(x);
+    }
+    printf("-----------------------------------------------------------------------\n");
+    printf("************** Existen %d Pokemones en la region %s *******************\n",i,nregion);
+    printf("-----------------------------------------------------------------------\n");
+}
 int main()
 {
 
     HashMap * map = createMap(100);
     HashMap * pokedex = createMap(100);
+    HashMap *REGION = createMap(100);
     int caso=2;
     printf("-----------------------------------------------------------------------\n");
     printf("                        ALMACENAMIENTO POKEMON                        \n");
@@ -387,8 +449,8 @@ int main()
 
         switch(caso)
         {
-            case 1:cargarPokemon(map,pokedex);break;
-            case 2:atraparPokemon(map,pokedex);break;
+            case 1:cargarPokemon(map,pokedex,REGION);break;
+            case 2:atraparPokemon(map,pokedex,REGION);break;
             case 3:evolucionar(map,pokedex);break;
             case 4:printf("NO IMPLEMENTADA\n");break;
             case 5:buscarPorNombre(map);break;
@@ -396,7 +458,7 @@ int main()
             case 7:printf("NO IMPLEMENTADA\n");break;
             case 8:printf("NO IMPLEMENTADA\n");break;
             case 9:printf("NO IMPLEMENTADA\n");break;
-            case 10:printf("NO IMPLEMENTADA\n");break;
+            case 10:MostrarXregion(map,pokedex,REGION);break;
         }
     }
     return 0;
