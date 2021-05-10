@@ -621,7 +621,7 @@ int main()
             case 1:cargarPokemon(map,pokedex,REGION);break;
             case 2:atraparPokemon(map,pokedex,REGION);break;
             case 3:evolucionar(map,pokedex);break;
-            case 4:printf("NO IMPLEMENTADA\n");break;
+            case 4:MostrarXtipo(map,pokedex);break;
             case 5:buscarPorNombre(map);break;
             case 6:buscarNombrePokedex(map,pokedex);break;
             case 7:mostrarPorPokedex(pokedex);break;
