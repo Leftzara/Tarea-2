@@ -498,29 +498,30 @@ void MostrarXtipo(HashMap *map,HashMap *pokedex){
         }
     }
     switch(f){
-        case 1:strcpy(auxtipo,tablat[f-1]);
-        case 2:strcpy(auxtipo,tablat[f-1]);
-        case 3:strcpy(auxtipo,tablat[f-1]);
-        case 4:strcpy(auxtipo,tablat[f-1]);
-        case 5:strcpy(auxtipo,tablat[f-1]);
-        case 6:strcpy(auxtipo,tablat[f-1]);
-        case 7:strcpy(auxtipo,tablat[f-1]);
-        case 8:strcpy(auxtipo,tablat[f-1]);
-        case 9:strcpy(auxtipo,tablat[f-1]);
-        case 10:strcpy(auxtipo,tablat[f-1]);
-        case 11:strcpy(auxtipo,tablat[f-1]);
-        case 12:strcpy(auxtipo,tablat[f-1]);
-        case 13:strcpy(auxtipo,tablat[f-1]);
-        case 14:strcpy(auxtipo,tablat[f-1]);
-        case 15:strcpy(auxtipo,tablat[f-1]);
-        case 16:strcpy(auxtipo,tablat[f-1]);
-        case 17:strcpy(auxtipo,tablat[f-1]);
-        case 18:strcpy(auxtipo,tablat[f-1]);
+        case 1:strcpy(auxtipo,tablat[f-1]);break;
+        case 2:strcpy(auxtipo,tablat[f-1]);break;
+        case 3:strcpy(auxtipo,tablat[f-1]);break;
+        case 4:strcpy(auxtipo,tablat[f-1]);break;
+        case 5:strcpy(auxtipo,tablat[f-1]);break;
+        case 6:strcpy(auxtipo,tablat[f-1]);break;
+        case 7:strcpy(auxtipo,tablat[f-1]);break;
+        case 8:strcpy(auxtipo,tablat[f-1]);break;
+        case 9:strcpy(auxtipo,tablat[f-1]);break;
+        case 10:strcpy(auxtipo,tablat[f-1]);break;
+        case 11:strcpy(auxtipo,tablat[f-1]);break;
+        case 12:strcpy(auxtipo,tablat[f-1]);break;
+        case 13:strcpy(auxtipo,tablat[f-1]);break;
+        case 14:strcpy(auxtipo,tablat[f-1]);break;
+        case 15:strcpy(auxtipo,tablat[f-1]);break;
+        case 16:strcpy(auxtipo,tablat[f-1]);break;
+        case 17:strcpy(auxtipo,tablat[f-1]);break;
+        case 18:strcpy(auxtipo,tablat[f-1]);break;
     }
     i=sizeMap(map);
     for(f=1;f<=i;f++){
         strcpy(ndexaux,paux->nPokedex);
         dexaux=searchMap(pokedex,ndexaux);
+        printf("%s, %s",dexaux->tipo[0],dexaux->tipo[1]);
         if(strcmp(dexaux->tipo[0],auxtipo) == 0 || strcmp(dexaux->tipo[1],auxtipo) == 0 ){
             x+=1;
             printf("ID: %s Nombre: %s PC: %d PS: %d Region: %s Sexo: %s\n");
