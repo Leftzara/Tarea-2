@@ -543,10 +543,13 @@ void MostrarXtipo(HashMap *map,HashMap *pokedex){
 
 }
 
+//Mostrar todos los pokemon de la pokedex.
 void mostrarPorPokedex(HashMap * pokedex){
+    //Se inicia lista en el primer pokemon de la pokedex.
     List * l = firstMap(pokedex);
     printf("-----------------------------------------------------------------------\n");
     while(l){
+        //Se inicia lista para pokemon atrapado (pokemon con nombre, existencia, tipo, evo previa, evo posterior y region).
         PokemonAtrapado * pa = firstList(l);
         printf("***************  POKEDEX ID: %s  ***************\n",pa->nPokedex);
         printf("-----------------------------------------------------------------------\n");
@@ -564,10 +567,13 @@ void mostrarPorPokedex(HashMap * pokedex){
             printf("-----------------------------------------------------------------------\n");
             pa=nextList(l);
         }
+        //Se avanza al siguiente pokemon con nextMap.
         l=nextMap(pokedex);
     }
 
 }
+
+
 void buscarNombrePokedex(HashMap * map,HashMap *pokedex){
     char nombre[50];
     printf("Ingrese el nombre del pokemon a buscar:");
