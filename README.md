@@ -18,6 +18,7 @@ ASPECTOS TECNICOS
     * Creamos un mapa pokedex implementado con tabla hash tambien donde la key es el numero de la pokedex y su valor una lista con todos los pokemons pertenecientes a esa pokedex
 MEJORAS:
     * La funcion mostrar todos los pokemon en la pokedex no lo hace en orden del numero de la pokedex
+    * La funcion Atrapar Pokemon funciona , pero al momento de llamar a Mostrar todos los pokemon en la pokedex se cae   
 
 INTEGRANTES:
 * Nicolas Eduardo Zarate Miethe
