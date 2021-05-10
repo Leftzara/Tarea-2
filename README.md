@@ -36,7 +36,7 @@ INTEGRANTES:
     Puntaje:1
 
 * Jose Ignacio Pailamilla Montecinos
-    Aspectos positivos: 
-    Mejorar: 
+    Aspectos positivos: Trabajo con tiempo,ayuda en soluciones de codigo
+    Mejorar: Trabajar mas rapido, Detectar errores rapidamente
     Puntaje:
  

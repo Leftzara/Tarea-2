@@ -246,18 +246,19 @@ void atraparPokemon(HashMap * map, HashMap * pokedex, HashMap *REGION){
     }
     else
     {
-        printf("Introduzca los datos del Pokemon\n");
+        printf("-----------------------------------------------------------------------\n");
+        printf("***************** Introduzca los datos del Pokemon *****************\n");
         char cad[72] = "Id:Nombre:PC:PS:Pre-Evolucion:Post-Evolucion:Region:Sexo:Numero-Pokedex:";
         printf("-----------------------------------------------------------------------\n");
-       char id[5];
+       char id[3];
        char nombre[50];
        //char **tipos;  
        int pc;
        int ps;
        char prEvol[50];
        char postEvol[50];
-       char region[50];
-       char sexo[2];
+       char region[20];
+       char sexo[10];
        char nPokedex[5];
        int cont=0;
        int i,j;
@@ -299,6 +300,7 @@ void atraparPokemon(HashMap * map, HashMap * pokedex, HashMap *REGION){
     }
     printf("-----------------------------------------------------------------------\n");
 }
+
 
 void buscarPorNombre(HashMap * map){
     if(map){
