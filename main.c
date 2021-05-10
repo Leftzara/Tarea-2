@@ -531,13 +531,13 @@ void MostrarXtipo(HashMap *map,HashMap *pokedex){
         if((strcmp(dexaux->tipo[0],auxtipo)==0 || strcmp(dexaux->tipo[1],auxtipo)==0) && dexaux->existencia>0){
             Pokemon* paux=firstMap(map);
             
-            for(f=0;f<i;f++{
+            for(f=0;f<i;f++){
                 if(strcmp(dexaux->pokemon,paux->nombre)){
                     x+=1;
                     printf("ID: %s Nombre: %s PC: %d PS: %d Region: %s Sexo: %s Nr. Pokedex: %s\n",paux->id,paux->nombre,paux->PC,paux->PS,dexaux->region,paux->sexo,paux->nPokedex);
                 }
                 paux=nextMap(map);
-            })
+            }
         }
 
         l=nextMap(pokedex);

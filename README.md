@@ -26,9 +26,9 @@ INTEGRANTES:
     Puntaje:
 
 * Ignacio Benjamin Cabrera Salazar
-    Aspectos positivos:
-    Mejorar: 
-    Puntaje:
+    Aspectos positivos:Ayuda en lo mas posible a solucionar problemas y preguntas a compañeros.
+    Mejorar: Poco manejo de las tablas hash y mal manejo del tiempo para realizar la tarea.
+    Puntaje: 0
 
 * Beatriz Macarena Segura Pasten
     Aspectos positivos: Trabajo con tiempo en la tarea, avanza rapido y ayuda en soluciones de errores en el codigo
