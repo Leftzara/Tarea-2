@@ -31,9 +31,9 @@ INTEGRANTES:
     Puntaje:
 
 * Beatriz Macarena Segura Pasten
-    Aspectos positivos:
-    Mejorar:
-    Puntaje:
+    Aspectos positivos: Trabajo con tiempo en la tarea, avanza rapido y ayuda en soluciones de errores en el codigo
+    Mejorar:Adelantar trabajo con anticipacion si alguno de los integrantes no ha realizado su parte, y mejorar comunicacion con el grupo si alguno no trabaja para evitar inconvenientes de ultima hora
+    Puntaje:1
 
 * Jose Ignacio Pailamilla Montecinos
     Aspectos positivos: 
