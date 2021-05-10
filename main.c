@@ -467,10 +467,9 @@ void EliminarPokemon(HashMap * map, HashMap *Pokedex)
 }
 
 void MostrarXtipo(HashMap *map,HashMap *pokedex){
-    PokemonAtrapado* dexaux; 
-    Pokemon* paux=firstMap(map);
+    List * l=firstMap(pokedex); 
     int f,i,x=0;//contador
-    char ndexaux[5];
+    char naux[50];
     char auxtipo[10];//Auxuliar para comparar tipo
     char tablat[18][10];//tabla con los tipos existentes
     //LLenamos la tabla
@@ -527,15 +526,21 @@ void MostrarXtipo(HashMap *map,HashMap *pokedex){
         case 18:strcpy(auxtipo,tablat[f-1]);break;
     }
     i=sizeMap(map);
-    for(f=1;f<=i;f++){
-        strcpy(ndexaux,paux->nPokedex);
-        dexaux=searchMap(pokedex,ndexaux);
-        printf("%s, %s",dexaux->tipo[0],dexaux->tipo[1]);
-        if(strcmp(dexaux->tipo[0],auxtipo) == 0 || strcmp(dexaux->tipo[1],auxtipo) == 0 ){
-            x+=1;
-            printf("ID: %s Nombre: %s PC: %d PS: %d Region: %s Sexo: %s\n");
+    while(l){
+        PokemonAtrapado* dexaux=firstList(l);
+        if((strcmp(dexaux->tipo[0],auxtipo)==0 || strcmp(dexaux->tipo[1],auxtipo)==0) && dexaux->existencia>0){
+            Pokemon* paux=firstMap(map);
+            
+            for(f=0;f<i;f++{
+                if(strcmp(dexaux->pokemon,paux->nombre)){
+                    x+=1;
+                    printf("ID: %s Nombre: %s PC: %d PS: %d Region: %s Sexo: %s Nr. Pokedex: %s\n",paux->id,paux->nombre,paux->PC,paux->PS,dexaux->region,paux->sexo,paux->nPokedex);
+                }
+                paux=nextMap(map);
+            })
         }
-        paux=nextMap(map);
+
+        l=nextMap(pokedex);
     }
     if(x == 0){
         printf("No se ha encontrado ningun pokemon de ese tipo.");
