@@ -20,7 +20,7 @@ typedef struct{
 typedef struct{
     char pokemon[50];
     int existencia;
-    char * tipo[50];
+    char * tipo[6];
     char previa[50];
     char posterior[50];
     char region[20];
@@ -45,7 +45,10 @@ PokemonAtrapado* createPokemonAtrapado(char* pokemon, char** tipo, char* previa,
     strcpy(pa->previa,previa);
     strcpy(pa->posterior,posterior);
     strcpy(pa->region,region);
-    strcmp(pa->nPokedex,nPokedex);
+    strcpy(pa->nPokedex,nPokedex);
+    for(int i=0; i<sizeof(tipo);i++){
+        if(tipo[i])pa->tipo[i]=tipo[i];
+    }
     pa->existencia = 1;
     return pa;
 }
@@ -171,7 +174,7 @@ void cargarPokemon(HashMap * map, HashMap * pokedex, HashMap * REGION){
         while (fgets (linea, 1023, file) != NULL) { 
         // Se lee la linea y se copia en el nuevo archivo
             fputs(linea,newfile);
-            char *nombre,*sexo,*ePrev,*ePos,*region,*id,*tipos[4],*nPok;
+            char *nombre,*sexo,*ePrev,*ePos,*region,*id,*tipos[6],*nPok;
             int i,pc=0,ps=0,k=0;
             for(int i=0;i<10;i++){
                 char *aux = get_csv_field(linea, i); 
@@ -181,7 +184,7 @@ void cargarPokemon(HashMap * map, HashMap * pokedex, HashMap * REGION){
                     //Separamos los tipos y los almacenamos en un arreglo bidimensional
                     int cont=0;
                     aux[strlen(aux)]='a';
-                    for(int w=0;w<4;w++){
+                    for(int w=0;w<6;w++){
                         char * q = get_csv_field(aux, w);
                         if(q){
                             tipos[cont]=q;
@@ -382,8 +385,7 @@ void evolucionar(HashMap * map, HashMap * pokedexs){
     }
     else printf("No tiene ningun pokemon en su almacenamiento\n");
 }
-void imprimirTipos(char **pokemon, int i)
-{
+void imprimirTipos(char **pokemon, int i){
     int f;
     printf("Tipos: ");
     for(f=0;f<i;f++)
@@ -463,6 +465,32 @@ void EliminarPokemon(HashMap * map, HashMap *Pokedex)
     printf("************** %s fue eliminado\n****************",nombre);
     printf("-----------------------------------------------------------------------\n");
 }
+
+void mostrarPorPokedex(HashMap * pokedex){
+    List * l = firstMap(pokedex);
+    printf("-----------------------------------------------------------------------\n");
+    while(l){
+        PokemonAtrapado * pa = firstList(l);
+        printf("***************  POKEDEX ID: %s  ***************\n",pa->nPokedex);
+        printf("-----------------------------------------------------------------------\n");
+        while(pa){
+            printf("Nombre: %s\n",pa->pokemon);
+            printf("Existencia: %d\n",pa->existencia);
+            printf("Tipos: ");
+            for(int i=0; i<6;i++){
+                if(pa->tipo[i])printf("%s  ",pa->tipo[i]);
+            }
+            printf("\n");
+            printf("Evolucion previa: %s\n",pa->previa);
+            printf("Evolucion posterior: %s\n",pa->posterior);
+            printf("Region: %s\n",pa->region);
+            printf("-----------------------------------------------------------------------\n");
+            pa=nextList(l);
+        }
+        l=nextMap(pokedex);
+    }
+
+}
 int main()
 {
 
@@ -496,7 +524,7 @@ int main()
             case 4:printf("NO IMPLEMENTADA\n");break;
             case 5:buscarPorNombre(map);break;
             case 6:printf("NO IMPLEMENTADA\n");break;
-            case 7:printf("NO IMPLEMENTADA\n");break;
+            case 7:mostrarPorPokedex(pokedex);break;
             case 8:printf("NO IMPLEMENTADA\n");break;
             case 9:EliminarPokemon(map,pokedex);break;
             case 10:MostrarXregion(map,pokedex,REGION);break;
