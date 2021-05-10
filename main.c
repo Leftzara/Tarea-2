@@ -457,6 +457,82 @@ void EliminarPokemon(HashMap * map, HashMap *Pokedex)
     printf("-----------------------------------------------------------------------\n");
 }
 
+void MostrarXtipo(HashMap *map,HashMap *pokedex){
+    PokemonAtrapado* dexaux; 
+    Pokemon* paux=firstMap(map);
+    int f,i,x=0;//contador
+    char ndexaux[5];
+    char auxtipo[10];//Auxuliar para comparar tipo
+    char tablat[18][10];//tabla con los tipos existentes
+    //LLenamos la tabla
+    strcpy(tablat[0],"Fuego");
+    strcpy(tablat[1],"Agua");
+    strcpy(tablat[2],"Planta");
+    strcpy(tablat[3],"Fantasma");
+    strcpy(tablat[4],"Electrico");
+    strcpy(tablat[5],"Psiquico");
+    strcpy(tablat[6],"Normal");
+    strcpy(tablat[7],"Siniestro");
+    strcpy(tablat[8],"Roca");
+    strcpy(tablat[9],"Lucha");
+    strcpy(tablat[10],"Volador");
+    strcpy(tablat[11],"Dragon");
+    strcpy(tablat[12],"Hada");
+    strcpy(tablat[13],"Acero");
+    strcpy(tablat[14],"Bicho");
+    strcpy(tablat[15],"Hielo");
+    strcpy(tablat[16],"Tierra");
+    strcpy(tablat[17],"Veneno");
+
+    printf("Favor seleccione el tipo de pokemon que desea buscar\n");
+    for(f=0;f<17;f++){
+        printf("opcion %d: %s\n",f+1,tablat[f]);
+    }
+    
+    scanf("%d",&f);
+    if(f>18 || f<0){
+    
+        while(f>18 || f<0){
+            printf("el valor otorgado no esta dentro de los pedidos favor ingreselo denuevo\n");
+            scanf("%d",&f);
+        }
+    }
+    switch(f){
+        case 1:strcpy(auxtipo,tablat[f-1]);
+        case 2:strcpy(auxtipo,tablat[f-1]);
+        case 3:strcpy(auxtipo,tablat[f-1]);
+        case 4:strcpy(auxtipo,tablat[f-1]);
+        case 5:strcpy(auxtipo,tablat[f-1]);
+        case 6:strcpy(auxtipo,tablat[f-1]);
+        case 7:strcpy(auxtipo,tablat[f-1]);
+        case 8:strcpy(auxtipo,tablat[f-1]);
+        case 9:strcpy(auxtipo,tablat[f-1]);
+        case 10:strcpy(auxtipo,tablat[f-1]);
+        case 11:strcpy(auxtipo,tablat[f-1]);
+        case 12:strcpy(auxtipo,tablat[f-1]);
+        case 13:strcpy(auxtipo,tablat[f-1]);
+        case 14:strcpy(auxtipo,tablat[f-1]);
+        case 15:strcpy(auxtipo,tablat[f-1]);
+        case 16:strcpy(auxtipo,tablat[f-1]);
+        case 17:strcpy(auxtipo,tablat[f-1]);
+        case 18:strcpy(auxtipo,tablat[f-1]);
+    }
+    i=sizeMap(map);
+    for(f=1;f<=i;f++){
+        strcpy(ndexaux,paux->nPokedex);
+        dexaux=searchMap(pokedex,ndexaux);
+        if(strcmp(dexaux->tipo[0],auxtipo) == 0 || strcmp(dexaux->tipo[1],auxtipo) == 0 ){
+            x+=1;
+            printf("ID: %s Nombre: %s PC: %d PS: %d Region: %s Sexo: %s\n");
+        }
+        paux=nextMap(map);
+    }
+    if(x == 0){
+        printf("No se ha encontrado ningun pokemon de ese tipo.");
+    }
+
+}
+
 void mostrarPorPokedex(HashMap * pokedex){
     List * l = firstMap(pokedex);
     printf("-----------------------------------------------------------------------\n");
