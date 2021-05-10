@@ -23,8 +23,8 @@ MEJORAS:
 INTEGRANTES:
 * Nicolas Eduardo Zarate Miethe
     Aspectos positivos:
-    Mejorar:
-    Puntaje:
+    Mejorar:Avisar dificultades para trabajar, trabajar con mayor ventana de tiempo
+    Puntaje:-1
 
 * Ignacio Benjamin Cabrera Salazar
     Aspectos positivos:Ayuda en lo mas posible a solucionar problemas y preguntas a compañeros.
