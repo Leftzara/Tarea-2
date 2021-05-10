@@ -34,10 +34,10 @@ INTEGRANTES:
 * Beatriz Macarena Segura Pasten
     Aspectos positivos: Trabajo con tiempo en la tarea, avanza rapido y ayuda en soluciones de errores en el codigo
     Mejorar:Adelantar trabajo con anticipacion si alguno de los integrantes no ha realizado su parte, y mejorar comunicacion con el grupo si alguno no trabaja para evitar inconvenientes de ultima hora
-    Puntaje:1
+    Puntaje:0.5
 
 * Jose Ignacio Pailamilla Montecinos
     Aspectos positivos: Trabajo con tiempo,ayuda en soluciones de codigo
     Mejorar: Trabajar mas rapido, Detectar errores rapidamente
-    Puntaje:
+    Puntaje:0.5
  
