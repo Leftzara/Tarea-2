@@ -389,18 +389,22 @@ void imprimirTipos(char **pokemon, int i){
     }
     printf("\n");
 }
+
+//Mostrar los pokemon por region.
 void MostrarXregion(HashMap *map, HashMap *pokedex, HashMap *REGION)
 {
+    //Se pide el nombre de la region.
     printf("Escriba la region que quiere buscar:");
     char nregion[30];
     scanf("%s",&nregion);
     int i=0;
     printf("Usted se encuentra en a region %s\n",nregion);
+    //Se inicia lista ubicada en pokemon con la region buscada.
     List *x = searchMap(REGION,nregion);
     PokemonAtrapado *aux = firstList(x);
     while(aux)
     {
-
+        //Se ve si la region es la misma que ingresó el usuario.
         if(is_equal(aux->region,nregion)==1)
         {
             printf("Numero en la Pokedex: %s\n",aux->nPokedex);
@@ -414,12 +418,15 @@ void MostrarXregion(HashMap *map, HashMap *pokedex, HashMap *REGION)
             i++;
         }
         printf("\n");
+        //Se avanza al siguiente pokemon.
         aux = nextList(x);
     }
     printf("-----------------------------------------------------------------------\n");
     printf("************ Existen %d Pokemones en la region %s *****************\n",i,nregion);
     printf("-----------------------------------------------------------------------\n");
 }
+
+
 //Falta que sea probada en la Pokedex
 void EliminarPokemon(HashMap * map, HashMap *Pokedex)
 {
