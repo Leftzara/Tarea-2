@@ -154,3 +154,6 @@ void * nextMap(HashMap * map) {
 long sizeMap(HashMap * map){
     return map->size;
 }
+long capacity(HashMap * map){
+    return map->capacity;
+}

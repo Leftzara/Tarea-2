@@ -204,6 +204,7 @@ void cargarPokemon(HashMap * map, HashMap * pokedex, HashMap * REGION){
                 if(i==8)nPok=aux;
                 if(i==9)region=aux;
             }
+            if(sizeMap(map)>=capacity(map)*0.7)enlarge(map);
             Storage(map,pokedex,REGION,nombre,id,tipos,pc,ps,sexo,ePrev,ePos,nPok,region);
             if(sizeMap(map)==100){
                 printf("Has llegado al limite de pokemon en tu almacenamiento\n");

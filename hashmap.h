@@ -27,4 +27,6 @@ void enlarge(HashMap * map);
 
 long sizeMap(HashMap * map);
 
+long capacity(HashMap * map);
+
 #endif
