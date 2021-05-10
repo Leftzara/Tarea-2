@@ -426,16 +426,8 @@ void EliminarPokemon(HashMap * map, HashMap *Pokedex)
     char nombre[30];
     scanf("%s",&id);
     Pokemon * aux = searchMap(map,id);
-    if(!aux)
-    {
-        printf("-----------------------------------------------------------------------\n");
-        printf("****************** No existe un Pokemon con ese ID ********************\n");
-        printf("-----------------------------------------------------------------------\n");
-    }
-    else
-    {
-        List *aux2 = searchMap(Pokedex,aux->nPokedex);
-        PokemonAtrapado *P = firstList(aux2);
+    List *aux2 = searchMap(Pokedex,aux->nPokedex);
+    PokemonAtrapado *P = firstList(aux2);
     
     
         if(is_equal(aux->id,id)==1)
@@ -446,26 +438,23 @@ void EliminarPokemon(HashMap * map, HashMap *Pokedex)
         
         //aux = nextMap(map);
     
-       while(aux2)
-       {  
-           if(is_equal(P->nPokedex,aux->nPokedex)==1)
-           {
-             
-              if(P->existencia>1)
-              {
-                //popBack(aux2);
-                  P->existencia--;
-                  break;
+    while(aux2)
+    {
+        if(is_equal(P->nPokedex,aux->nPokedex)==1)
+        {
+            popCurrent(aux2);
+            if(P->existencia>1)
+            {
+                P->existencia--;
                 //Pokedex = aux2;
-              }
+            }
             
-           }
+        }
         aux2 = nextList(aux2);
-       }
-       printf("-----------------------------------------------------------------------\n");
-       printf("************** %s fue eliminado ****************\n",nombre);
-       printf("-----------------------------------------------------------------------\n");
     }
+    printf("-----------------------------------------------------------------------\n");
+    printf("************** %s fue eliminado\n****************",nombre);
+    printf("-----------------------------------------------------------------------\n");
 }
 
 void MostrarXtipo(HashMap *map,HashMap *pokedex){
