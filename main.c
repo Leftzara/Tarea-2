@@ -594,6 +594,30 @@ void buscarNombrePokedex(HashMap * map,HashMap *pokedex){
     }
 }
 
+//SE CUELGA AL ENCONTRAR 3ER POKEMON.
+void mostrarPorPC (HashMap * map){
+    int contadorPC = 0;
+    Pokemon * pokemon = firstMap(map);
+    while(contadorPC <= 3000){
+
+        if(contadorPC == pokemon->PC){
+            printf("Pokemon: %s   ",pokemon->nombre);
+            printf("PC: %d \n",pokemon->PC);
+            contadorPC++;
+            pokemon = firstMap(map);
+        }
+        else{
+            if(contadorPC != pokemon->PC){
+                contadorPC++;
+                pokemon = nextMap(map);
+            }
+        }
+
+        
+    }
+}
+
+
 int main()
 {
 
@@ -628,7 +652,7 @@ int main()
             case 5:buscarPorNombre(map);break;
             case 6:buscarNombrePokedex(map,pokedex);break;
             case 7:mostrarPorPokedex(pokedex);break;
-            case 8:printf("NO IMPLEMENTADA\n");break;
+            case 8:mostrarPorPC(map);break;
             case 9:EliminarPokemon(map,pokedex);break;
             case 10:MostrarXregion(map,pokedex,REGION);break;
         }
