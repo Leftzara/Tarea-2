@@ -1,10 +1,42 @@
 # Tarea-2
 
-Instrucciones ara compilar
+Instrucciones para compilar
 ingresar   gcc main.c list.c hashmap.c -o Tarea-2 luego executar Tarea-2
-si el programa se cae depurar con   gcc -g  main.c list.c hashmap.c -o Tarea-2
+
+**Si el programa se cae depurar con   gcc -g  main.c list.c hashmap.c -o Tarea-2
                                     gdb --args ./Tarea-2    
                                     run
+
 Las estructuras creadas fueron 2 mapas 
 - map = Contiene todos los pokemons del storage con key su id y value la estructura pokemon
 - pokedex = Contiene todas las pokedex en forma de lista con key el numero de pokedex y value la lista con los pokemons atrapados asociados a esta pokedex
+
+Repositorio en GitHub https://github.com/Leftzara/Tarea-2
+
+ASPECTOS TECNICOS
+    * Almacenamos todos los pokemon en un mapa implementado con tabla hash, con key la id del pokemon y el valor una estructura pokemon con todos sus datos de combate
+    * Creamos un mapa pokedex implementado con tabla hash tambien donde la key es el numero de la pokedex y su valor una lista con todos los pokemons pertenecientes a esa pokedex
+MEJORAS:
+    * La funcion mostrar todos los pokemon en la pokedex no lo hace en orden del numero de la pokedex
+
+INTEGRANTES:
+* Nicolas Eduardo Zarate Miethe
+    Aspectos positivos:
+    Mejorar:
+    Puntaje:
+
+* Ignacio Benjamin Cabrera Salazar
+    Aspectos positivos:
+    Mejorar: 
+    Puntaje:
+
+* Beatriz Macarena Segura Pasten
+    Aspectos positivos:
+    Mejorar:
+    Puntaje:
+
+* Jose Ignacio Pailamilla Montecinos
+    Aspectos positivos: 
+    Mejorar: 
+    Puntaje:
+ 
