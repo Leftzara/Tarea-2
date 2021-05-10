@@ -521,7 +521,7 @@ void MostrarXtipo(HashMap *map,HashMap *pokedex){
     for(f=1;f<=i;f++){
         strcpy(ndexaux,paux->nPokedex);
         dexaux=searchMap(pokedex,ndexaux);
-        printf("guido caca %s %s",dexaux->tipo[0],dexaux->tipo[1]);
+        printf("%s, %s",dexaux->tipo[0],dexaux->tipo[1]);
         if(strcmp(dexaux->tipo[0],auxtipo) == 0 || strcmp(dexaux->tipo[1],auxtipo) == 0 ){
             x+=1;
             printf("ID: %s Nombre: %s PC: %d PS: %d Region: %s Sexo: %s\n");
