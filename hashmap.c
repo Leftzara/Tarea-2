@@ -22,7 +22,7 @@ struct HashMap {
 
 Pair * createPair( char * key,  void * value) {
     Pair * new = (Pair *)malloc(sizeof(Pair));
-    strcpy(new->key,key);
+    new->key=key;
     new->value = value;
     return new;
 }

@@ -299,15 +299,6 @@ void atraparPokemon(HashMap * map, HashMap * pokedex, HashMap *REGION){
     printf("-----------------------------------------------------------------------\n");
 }
 
-//Le da formato a la cadena ingresada por si el usuario no inicio o escribio toda la palabra con mayuscula
-char * formatoCadena(char * cadena){
-    for(int i=0;i<strlen(cadena);i++){
-        if(i==0)cadena[0]=toupper(cadena[0]);
-        else cadena[i]=tolower(cadena[i]);
-    }
-    return cadena;
-}
-
 void buscarPorNombre(HashMap * map){
     if(map){
         printf("-----------------------------------------------------------------------\n");
@@ -317,7 +308,6 @@ void buscarPorNombre(HashMap * map){
         printf("Ingrese el nombre del pokemon a buscar: ");
         scanf("%s",&nombre);
         printf("-----------------------------------------------------------------------\n");
-        strcpy(nombre,formatoCadena(nombre));
         while(pokemon){
             if(is_equal(pokemon->nombre,nombre)){
                 if(!flag){
@@ -491,6 +481,39 @@ void mostrarPorPokedex(HashMap * pokedex){
     }
 
 }
+void buscarNombrePokedex(HashMap * map,HashMap *pokedex){
+    char nombre[50];
+    printf("Ingrese el nombre del pokemon a buscar:");
+    scanf("%s",&nombre);
+    Pokemon * pokemon = firstMap(map);
+    printf("-----------------------------------------------------------------------\n");
+    while(pokemon){
+        if(is_equal(pokemon->nombre,nombre)){
+            List * l=searchMap(pokedex,pokemon->nPokedex);
+            PokemonAtrapado * pa = firstList(l);
+            printf("-----------------------------------------------------------------------\n");
+            while(pa){
+                if(is_equal(pa->pokemon,nombre)){
+                    printf("Numero de pokedex en que se encuentra: %s\n",pokemon->nPokedex);
+                    printf("Existencia: %d\n",pa->existencia);
+                    printf("Tipos: ");
+                    for(int i=0; i<6;i++){
+                        if(pa->tipo[i])printf("%s  ",pa->tipo[i]);
+                    }
+                    printf("\n");
+                    printf("Evolucion previa: %s\n",pa->previa);
+                    printf("Evolucion posterior: %s\n",pa->posterior);
+                    printf("Region: %s\n",pa->region);
+                    printf("-----------------------------------------------------------------------\n");
+                    break;
+                }
+                pa=nextList(l);
+            }
+        }
+        pokemon=nextMap(map);
+    }
+}
+
 int main()
 {
 
@@ -523,7 +546,7 @@ int main()
             case 3:evolucionar(map,pokedex);break;
             case 4:printf("NO IMPLEMENTADA\n");break;
             case 5:buscarPorNombre(map);break;
-            case 6:printf("NO IMPLEMENTADA\n");break;
+            case 6:buscarNombrePokedex(map,pokedex);break;
             case 7:mostrarPorPokedex(pokedex);break;
             case 8:printf("NO IMPLEMENTADA\n");break;
             case 9:EliminarPokemon(map,pokedex);break;
